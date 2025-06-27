@@ -1,0 +1,136 @@
+lucide-react --- for icons
+react-player to play vidoes
+lib (meaning library) **
+
+  **const isAdminRoute = useLocation().pathname.startsWith("/admin");
+      **{!isAdminRoute && <Navbar />}
+{!isAdminRoute && <Footer />}
+** onClick={() => {
+            scrollTo(0, 0); setIsOpen(false);
+          }}
+
+1. create const [isMenuOpen, setIsmenuopen] = useState(false);
+2. add it to the className of the menu bar (i.e. className={`${isMenuOpen ? "max-md:w-full" : "max-md:w-0"}`})
+3. add onclick event to both the menu icon and the xIcon (i.e. setIsmenuopen(!isMenuOpen))
+4. add the onclick events to the menu items (i.e. onClick={() =>{scrollTo(0, 0), setIsOpen(false) } })
+
+1. clerk was used for user authentication (login, signup)
+a. it allows users to create multiple accounts so they can switch into different accounts without signing out
+2. clerk provides a dashboard where you can manage users and their accounts
+3. sign up on clerk and create a new project
+4. create a new apllication and add all what you want for the signup dashboard (ie. phoneNumber, email, google accpounts etc)
+5. select the package you want to use (free or paid)
+6. Install Clerk  -- npm install @clerk/clerk-react
+7. Add your Clerk API key to your .env file
+8. import ClerkProvider in main.jsx,   const PublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;... in main.jsx file
+9.. Add the ClerkProvider component to your main.jsx file and wrap the BrowserRouter component with it.
+import { useClerk, UserButton, useUser } from "@clerk/clerk-react" in navbar.jsx
+a.  const { user } = useUser();
+  const { openSignIn } = useClerk();
+b.        {!user ? (
+          <button className="px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer">
+            Login
+          </button>
+        ) : (
+          UserButton
+        )}
+
+c. <UserButton>
+<UserButton.MenuItems>
+<UserButton.Action  label="My Bookings"
+                labelIcon={<TicketPlus width={15} />}
+                onClick={() => navigate("/my-bookings")} />
+</UserButton.MenuItem>
+</UserButton>
+
+d. multisection authentication
+1. clerk dashboard
+2. configure
+3. sessions
+4. options (multi section handling)
+
+
+** The group class is a Tailwind CSS utility that allows you to style child elements based on the parent's hover state.
+** Marks the container that triggers hover effects.
+
+Example: <button className="group"> ... </button>
+
+** object-right-bottom - positions the object in the bottom right corner of the container.
+** truncate - truncates the text to a specified number of lines.
+** object-right-bottom positions the image so its right-bottom part is visible if cropped.
+
+** toFixed displays the number with a fixed number of decimal
+
+lib folder 
+1. create a new folder in the lib folder (i.e. timeFormat.js)
+2. create a function that takes in minutes as a parameter
+3 convert the minutes to hours and minutes (claculate full hours: const hours = Math.floor(minutes / 60);)
+4. calculate the remaining minutes (const minutesRemainder = minutes % 60;)
+5. return the formatted string return `${hours}h ${minutesRemainder}m`;
+
+
+** strokeWidth={1.6}
+This sets the thickness of the icon's outline/stroke to 1.6 units
+
+** group-hover:not-hover:opacity-50
+** group-hover:not-hover:opacity-50 hover:-translate-y-1 duration-300 transition max-md:h-60 md:max-h-60
+** active:scale-95
+** width: max-content (or Tailwind’s w-max)
+** smooth-scroll can be added to the html tag to enable smooth scrolling
+
+-- Prebuiltui
+
+-- The use of Object.keys(dateTime).map() instead of dateTime.map() suggests that dateTime is an object, not an array
+-- {new Date(date).toLocaleDateString("en-US", { month: "short" })}
+
+children nested routing 
+** /admin/* is different from /admin in the sense that /adimn/* any deeper nested paths like /admin/anything/else (the * catches all additional segments)
+** Use /* if you want the Layout to handle all sub-routes, even undefined ones
+
+** h-[] → Tailwind’s arbitrary value syntax (lets you use custom values).
+
+calc(100vh - 64px) → A CSS calculation: 100% of the viewport height minus a fixed height.
+100vh → 100% of the viewport height.
+64px → Subtracts a fixed height (e.g., a navbar or header).
+
+--even:bg-primary/10 == nth-child(even) - selects even-numbered elements
+
+study this -- const handleDateTimeAdd = () => {
+    if (!dateTimeInput) return;
+    const [date, time] = dateTimeInput.split("T");
+    if (!date || !time) return;
+
+    setDateTimeSelection((prev) => {
+      const times = prev[date] || [];
+      if (!times.includes(time)) {
+        return { ...prev, [date]: [...times, time] };
+      }
+      return prev;
+    });
+  };
+
+study this --  const handleRemoveTime = (date, time) => {
+    setDateTimeSelection((prev) => {
+      const filteredTimes = prev[date].filter((t) => t !== time);
+      if (filteredTimes.length === 0) {
+        const { [date]: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, [date]: filteredTimes };
+    });
+  };
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+::-webkit-calender-picker-indicator {
+  filter: invert(1);
+}
+
+What space-y-3 Does:
+Adds a margin-top (margin-top: 0.75rem in Tailwind's default spacing scale) to all child elements except the first one inside a container.
+to avoid the margin-top on the first child, and to avoid using mb-2 on each element
+
+-- difference between object.keys and object.entries
